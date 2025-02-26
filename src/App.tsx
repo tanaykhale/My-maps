@@ -1,8 +1,13 @@
+import Maps from "./components/Maps";
+import AutoCompleteLocation from "./components/AutoCompleteLocation";
 const App = () => {
   return (
-    <div>
-      <h1>Google Maps </h1>
-    </div>
+    <>
+      <div>
+        {/* <Maps></Maps> */}
+        <AutoCompleteLocation></AutoCompleteLocation>
+      </div>
+    </>
   );
 };
 
