@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
 const containerStyle = {
   width: "100%",
   height: "500px",
 };
 
+interface Place {
+  lat: number;
+  lng: number;
+}
+
+interface MapProps {
+  selectedPlace: Place;
+}
 const center = {
   lat: 0,
   lng: 0,
 };
 
-const Map = () => {
+const Map = ({ selectedPlace }: MapProps) => {
   const [currentLocation, setCurrentLocation] = useState(center);
 
   useEffect(() => {
@@ -27,17 +35,20 @@ const Map = () => {
       );
     }
   }, []);
+  useEffect(() => {
+    if (selectedPlace.lat !== 0 && selectedPlace.lng !== 0) {
+      setCurrentLocation(selectedPlace);
+    }
+  }, [selectedPlace]);
 
   return (
-    <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={currentLocation}
-        zoom={15}
-      >
-        <Marker position={currentLocation} />
-      </GoogleMap>
-    </LoadScript>
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={currentLocation}
+      zoom={15}
+    >
+      <Marker position={currentLocation} />
+    </GoogleMap>
   );
 };
 
